@@ -14,9 +14,9 @@ def yolo_cofiguration():
     labels = open(coco_labels_path).read().strip().split("\n")
 
     weights_path = "{base_path}/Day3_YOLO_CFG/yolov3.weights" \
-                  "".format(base_path=BASE_PATH)
+                  "" .format(base_path=BASE_PATH)
     cfg_path = "{base_path}/Day3_YOLO_CFG/yolov3.cfg" \
-                   "".format(base_path=BASE_PATH)
+                   "" .format(base_path=BASE_PATH)
     return labels, cfg_path, weights_path
 
 
