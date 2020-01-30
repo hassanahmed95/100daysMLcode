@@ -62,7 +62,7 @@ def object_recog(image):
                 classIDs.append(classID)
 
     # 0.3 is NMS threshold, while 0.5 is the confidence value
-    idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.1)
+    idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.3)
     if len(idxs) > 0:
         for i in idxs.flatten():
             (x, y) = (boxes[i][0], boxes[i][1])
