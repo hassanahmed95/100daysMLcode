@@ -2,6 +2,9 @@
 # the object detection algorithm named as YOLO has been used for detection purpose
 # dlib correlation has been used as a tracking algorithm
 
+# TILL yet i have just performed the object detection in the video stream
+# using the YOLO object detection model. . . On these detected objects, we will have to perform the
+# object traking using dlib coralation traking
 import os
 import cv2
 import numpy as np
@@ -31,7 +34,7 @@ def object_detection():
         grabbed, image = video.read()
         if not grabbed:
             break
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            
         image = imutils.resize(image, width=600)
         blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416),
                                       swapRB=True, crop=False)
@@ -90,4 +93,4 @@ def object_detection():
 
 
 if __name__ == "__main__":
-    object_detection()
+    object_detection ()

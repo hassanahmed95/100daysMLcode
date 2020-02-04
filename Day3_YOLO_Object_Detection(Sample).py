@@ -1,10 +1,14 @@
-# In that project a sample project has been done using YOLO from OpenCv.
+# Sample project has been done using YOLO from OpenCv,
+# as an object detection model, while Dlib has been used as
+# object tracking algorithm.
 # The code and details credit goes to Pyimagsesearch
 import os
 import cv2
 import numpy as np
 import time
+import warnings
 
+warnings.simplefilter("ignore")
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -43,14 +47,15 @@ def object_recog(image):
     boxes = []
     confidences = []
     classIDs = []
-    layerOutputs, LABELS = object_detection(image)
-    for output in layerOutputs:
+    layeroutputs , LABELS = object_detection(image)
+    for output in layeroutputs:
         # loop over each of the detections
         for detection in output:
             # 5 elements > centerX,centerY, width,height and score
             scores = detection[5:]
             classID = np.argmax(scores)
             confidence = scores[classID]
+
             if confidence > 0.7:
                 H, W = image.shape[:2]
                 box = detection[0:4] * np.array([W, H, W, H])
@@ -79,7 +84,7 @@ def object_recog(image):
 
 if __name__ == "__main__":
     # passing the path of the input images
-    image_path = "./Day3_YOLO_CFG/soccer.jpg"
+    image_path = "./Day3_YOLO_CFG/unnamed.jpg"
     image = cv2.imread(image_path)
     object_recog(image)
 
