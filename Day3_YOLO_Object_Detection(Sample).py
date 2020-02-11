@@ -84,7 +84,7 @@ def object_recog(image):
 
 if __name__ == "__main__":
     # passing the path of the input images
-    image_path = "./Day3_YOLO_CFG/unnamed.jpg"
+    image_path = "./Day3_YOLO_CFG/soccer.jpg"
     image = cv2.imread(image_path)
     object_recog(image)
 
