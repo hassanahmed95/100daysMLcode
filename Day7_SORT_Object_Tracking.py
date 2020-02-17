@@ -15,9 +15,7 @@ def yolo_cofiguration():
                   "".format(base_path=BASE_PATH)
     cfg_path = "{base_path}/Day3_YOLO_CFG/yolov3.cfg" \
                    "".format(base_path=BASE_PATH)
-
     mot_tracker = Sort()
-
     return mot_tracker, labels, cfg_path, weights_path
 
 
@@ -29,7 +27,7 @@ def object_detection():
     # determine only output layers naraceme
     ln = net.getLayerNames()
     ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-    video = cv2.VideoCapture("Day3_YOLO_CFG/testing_video1.mp4")
+    video = cv2.VideoCapture("Day3_YOLO_CFG/cat.mp4")
     obj_list = ["cat", "car", "truck", "person"]
     # Some YOLO blob configuration
     confThreshold = 0.70
@@ -82,13 +80,10 @@ def object_detection():
                     continue
                 (x, y) = (boxes[i][0], boxes[i][1])
                 (w, h) = (boxes[i][2], boxes[i][3])
-
                 # here I am converting the bounding boxes to numpy array,
                 # which is expected by the SORT MOT
                 track_boxes = np.array(track_boxes)
                 trackers = mot_tracker.update(track_boxes)
-                # print(len(trackers[0]))
-                # exit()
                 if len(trackers) > 0:
                     for track in trackers:
                         # print("extracting the track ID of the tracked object")
@@ -96,12 +91,10 @@ def object_detection():
                         print(track_id)
                         cropped = image[int(track[1]): int(track[3]), int(track[0]): int(track[2])]
                         cv2.imwrite("img.jpg", cropped)
-
                 cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 text = "{}: {:.4f}".format(predicted_class + "" + str(track_id), confidences[i])
                 cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 0, 255), 2)
-
         cv2.imshow("Image", image)
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
