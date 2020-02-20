@@ -2,7 +2,8 @@ import os
 import cv2
 import imutils
 import numpy as np
-# here I am importing the files for the Deep Sort Tracking Algorithm
+
+# These are the imports for the Deep Sort...
 import sys
 sys.path.insert(1, "deep_sort/")
 import warnings
@@ -83,12 +84,11 @@ def object_detection():
                     x = int(centerX - (width / 2))
                     y = int(centerY - (height / 2))
                     boxes.append([x, y, int(width), int(height)])
-                    # SORT object tracker expects the complete Bounding boxes
-                    # therefore w+h and height+y has been added for the tracking of the detected object
+                    # DEEP SORT object tracker expects the 4 parameters x,y,w,h of a Bounding box
+                    # unlike sort, which accepts complete bounding box in order to get the track of the detected object.
                     track_boxes.append([x+20, y+20, int(width)+20, int(height)+20])
                     confidences.append(float(confidence))
                     classIDs.append(classID)
-        # 0.3 is NMS threshold, while 0.5 is the confidence value
         idxs = cv2.dnn.NMSBoxes(boxes, confidences, confThreshold, nmsThreshold)
         # IDX are the number of the detected objects by YOLO.  .
         if len(idxs) > 0:
@@ -97,14 +97,11 @@ def object_detection():
                 predicted_class = LABELS[classIDs[i]]
                 if predicted_class not in obj_list:
                     continue
-
                 text = "{}: {:.4f}".format(predicted_class + "", confidences[i])
                 (x, y) = (boxes[i][0], boxes[i][1])
                 (w, h) = (boxes[i][2], boxes[i][3])
-
                 # track_boxes = np.array(track_boxes)
                 features = encoder(image, track_boxes)
-
                 detections = [Detection(bbox, 1.0, feature) for bbox, feature in zip(track_boxes, features)]
                 boxs = np.array([d.tlwh for d in detections])
                 scores = np.array([d.confidence for d in detections])

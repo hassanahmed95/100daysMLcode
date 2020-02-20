@@ -2,7 +2,6 @@ import os
 import cv2
 import imutils
 from Day7_SORT_tracker import *
-
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
