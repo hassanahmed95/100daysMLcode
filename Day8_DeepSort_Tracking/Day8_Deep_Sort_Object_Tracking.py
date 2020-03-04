@@ -2,6 +2,8 @@ import os
 import cv2
 import imutils
 import numpy as np
+# object detection has been performed using YOLOv3 from openCV
+# object tracking has been performed using Deep Sort
 
 # These are the imports for the Deep Sort...
 import sys
