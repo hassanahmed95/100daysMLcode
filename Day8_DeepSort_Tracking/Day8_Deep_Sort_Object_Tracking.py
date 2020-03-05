@@ -109,11 +109,9 @@ def object_detection():
                 scores = np.array([d.confidence for d in detections])
                 indices = preprocessing.non_max_suppression(boxs, nms_max_overlap, scores)
                 detections = [detections[i] for i in indices]
-
                 # Call the tracker
                 tracker.predict()
                 tracker.update(detections)
-
                 # here I will go through from the object tracker
                 for track in tracker.tracks:
                     if not track.is_confirmed() or track.time_since_update > 1:
